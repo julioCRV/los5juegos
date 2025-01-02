@@ -6,7 +6,7 @@ const ObservaYRealiza = () => {
   const [isListening, setIsListening] = useState(false);
   const [message, setMessage] = useState("");
   const [index, setIndex] = useState(Math.floor(Math.random() * 8) + 1);
-  console.log(index);
+  
 
   const startListening = () => {
     if (!("webkitSpeechRecognition" in window)) {
@@ -27,11 +27,27 @@ const ObservaYRealiza = () => {
       setTranscript(result);
 
       // Comprobar si la palabra "serpiente" está en el resultado
-      if (result.includes("serpiente")) {
-        setMessage("¡Correcto!");
-      } else {
-        setMessage("¡Incorrecto!");
+      let respuesta = "¡Incorrecto!";
+      if(index === 1 && result.includes("serpiente")){
+        respuesta = "¡Correcto!"
+      }else if(index === 2 && result.includes("taxi")){
+        respuesta = "¡Correcto!"
+      }else if(index === 3 && result.includes("tenis")){
+        respuesta = "¡Correcto!"
+      }else if(index === 4 && result.includes("peine")){
+        respuesta = "¡Correcto!"
+      }else if(index === 5 && result.includes("tijera")){
+        respuesta = "¡Correcto!"
+      }else if(index === 6 && result.includes("manzana")){
+        respuesta = "¡Correcto!"
+      }else if(index === 7 && result.includes("cuchara")){
+        respuesta = "¡Correcto!"
+      }else if(index === 8 && result.includes("vaso")){
+        respuesta = "¡Correcto!"
       }
+
+      
+      setMessage(respuesta);
     };
 
     recognition.onerror = (event) => {
