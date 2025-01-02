@@ -1,0 +1,84 @@
+.game-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+  
+  .game-board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .available-images,
+  .sequence-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    width: 300px;
+  }
+  
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .timer-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .images-row,
+  .sequence-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    gap: 10px;
+  }
+  
+  .available-slot,
+  .sequence-slot {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+  }
+  
+  .available-slot:hover,
+  .sequence-slot:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .draggable-image,
+  .sequence-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .placeholder {
+    color: #aaa;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  h3 {
+    margin-bottom: 10px;
+  }
+  

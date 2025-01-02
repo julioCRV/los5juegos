@@ -5,6 +5,8 @@ const ObservaYRealiza = () => {
   const [transcript, setTranscript] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [message, setMessage] = useState("");
+  const [index, setIndex] = useState(Math.floor(Math.random() * 8) + 1);
+  console.log(index);
 
   const startListening = () => {
     if (!("webkitSpeechRecognition" in window)) {
@@ -50,7 +52,7 @@ const ObservaYRealiza = () => {
       <h2 className="observa-title">Observa y realiza una oración</h2>
       <div className="observa-row">
         <img
-          src="/src/assets/g11.svg" // Cambia esta ruta según tu imagen
+          src={`/src/assets/g1${index}.svg`} // Cambia esta ruta según tu imagen
           alt="Ejemplo"
           className="observa-image"
         />

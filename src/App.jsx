@@ -3,13 +3,13 @@ import React from 'react';
 import './App.css';
 import Login from './components/Login';
 // Testing
-import Observa from './components/ObservaYRealiza';
+import Demo from './components/ObservaYRealiza';
 // EndTesting
 
 const App = () => {
   return (
     <div className="App">
-      <Observa />
+      <Demo />
     </div>
   );
 };
