@@ -6,10 +6,13 @@ import Login from './components/Login';
 import Demo from './components/ObservaYRealiza';
 // EndTesting
 
+import IniciarSesion from './pages/IniciarSesion';
+
 const App = () => {
   return (
     <div className="App">
-      <Demo />
+      {/* <Login /> */}
+      <IniciarSesion />
     </div>
   );
 };
