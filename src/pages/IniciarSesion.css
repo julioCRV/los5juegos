@@ -9,9 +9,9 @@
 .div1 {
     grid-area: 1 / 1 / 2 / 2;
     background: #6AB38F;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .div2 {
@@ -20,7 +20,6 @@
     padding: 100px;
     // border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
 }
 
 .imagen {
@@ -33,20 +32,16 @@
     color: #333;
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
 .form-group {
     text-align: left;
+    padding-bottom: 10px;
 }
 
 .label {
     display: block;
+    font-weight: bold;
     margin-bottom: 5px;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
 }
 
@@ -59,9 +54,10 @@
 }
 
 .button {
+    width: 70%;
     padding: 10px 15px;
     font-size: 16px;
-    background-color: #007BFF;
+    background-color: #6AB38F;
     color: #fff;
     border: none;
     border-radius: 4px;

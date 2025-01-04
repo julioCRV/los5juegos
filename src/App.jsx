@@ -1,18 +1,40 @@
-// src/App.jsx
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Login from './components/Login';
 // Testing
 import Demo from './components/ObservaYRealiza';
 // EndTesting
 
+
+// - - - - - - - - - - -  R U T A S - - - - - - - - - - -
 import IniciarSesion from './pages/IniciarSesion';
+import Inicio from './pages/Inicio';
+
+import RealizarOracion from './pages/RealizarOracion';
+import ArmadorRempecabezas from './pages/ArmadoresRompecabezas';
+import EncuentraParejas from './pages/EncuentraParejas';
+import AsociaImagenes from './pages/AsociacionImagenes';
+import ObjetosCotidianos from './pages/ObjetosCotidianos';
 
 const App = () => {
   return (
     <div className="App">
       {/* <Login /> */}
-      <IniciarSesion />
+      <Router>
+        <Routes>
+          <Route path="/" element={<IniciarSesion />} />
+          <Route path='/Inicio' element={<Inicio />} />
+          <Route path='/realizar-oración' element={<RealizarOracion />} />
+          <Route path='/armar-rompecabeza' element={<ArmadorRempecabezas />} />
+          <Route path='/encontrar-pares' element={<EncuentraParejas />} />
+          <Route path='/asociar-imagenes' element={<AsociaImagenes />} />
+          <Route path='/buscar-objetos' element={<ObjetosCotidianos />} />
+          <Route path="*" element={<IniciarSesion />} />
+        </Routes>
+      </Router>
+
+
     </div>
   );
 };
