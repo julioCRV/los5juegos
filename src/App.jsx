@@ -11,11 +11,11 @@ import Demo from './components/ObservaYRealiza';
 import IniciarSesion from './pages/IniciarSesion';
 import Inicio from './pages/Inicio';
 
-import RealizarOracion from './pages/RealizarOracion';
-import ArmadorRempecabezas from './pages/ArmadoresRompecabezas';
-import EncuentraParejas from './pages/EncuentraParejas';
-import AsociaImagenes from './pages/AsociacionImagenes';
-import ObjetosCotidianos from './pages/ObjetosCotidianos';
+import RealizarOracion from './pages/Juegos/RealizarOracion';
+import ArmadorRempecabezas from './pages/Juegos/ArmadoresRompecabezas';
+import EncuentraParejas from './pages/Juegos/EncuentraParejas';
+import AsociaImagenes from './pages/Juegos/AsociacionImagenes';
+import ObjetosCotidianos from './pages/Juegos/ObjetosCotidianos';
 
 const App = () => {
   return (
