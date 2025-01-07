@@ -1,6 +1,6 @@
 // Importando hooks y CSS necesarios para el componente
 import React, { useState, useEffect } from 'react';
-import './shipowners_actions.css';
+import './2-ArmadoresConAcciones.css';
 
 // Componente principal del juego
 const GameComponent = () => {
@@ -10,16 +10,23 @@ const GameComponent = () => {
         [4, 5, 6], // Segunda fila
     ];
 
+    const numeros = [1, 2, 3, 4, 5, 6];
+    
+
+    // Mezclar números y tomar los primeros 5
+    const arreglo = numeros.sort(() => Math.random() - 0.5).slice(0, 5);
+    const numero = Math.floor(Math.random() * 2) + 1;
+
     // Definición de los estados usando useState
     const [failedAttempts, setFailedAttempts] = useState(0); // Intentos fallidos del jugador
     const [timeElapsed, setTimeElapsed] = useState(0); // Tiempo transcurrido desde que comenzó el juego
     const [availableImages, setAvailableImages] = useState([
-        { id: 1, src: 'image1.jpg' },
-        { id: 2, src: 'image2.jpg' },
-        { id: 3, src: 'image3.jpg' },
-        { id: 4, src: 'image4.jpg' },
-        { id: 5, src: 'image5.jpg' },
-        { id: 6, src: 'image6.jpg' },
+        { id: numeros[0], src: '/src/assets/g2'+numero+''+numeros[0]+'.svg' },
+        { id: numeros[1], src: '/src/assets/g2'+numero+''+numeros[1]+'.svg' },
+        { id: numeros[2], src: '/src/assets/g2'+numero+''+numeros[2]+'.svg' },
+        { id: numeros[3], src: '/src/assets/g2'+numero+''+numeros[3]+'.svg' },
+        { id: numeros[4], src: '/src/assets/g2'+numero+''+numeros[4]+'.svg' },
+        { id: numeros[5], src: '/src/assets/g2'+numero+''+numeros[5]+'.svg' },
     ]);
     const [sequence, setSequence] = useState(Array(6).fill(null)); // Secuencia actual de imágenes colocadas en el tablero
     const [gameMatrix, setGameMatrix] = useState([

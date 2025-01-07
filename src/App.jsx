@@ -1,21 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Login from './components/Login';
-// Testing
-import Demo from './components/ObservaYRealiza';
-// EndTesting
-
 
 // - - - - - - - - - - -  R U T A S - - - - - - - - - - -
 import IniciarSesion from './pages/IniciarSesion';
 import Inicio from './pages/Inicio';
 
-import RealizarOracion from './pages/Juegos/RealizarOracion';
-import ArmadorRempecabezas from './pages/Juegos/ArmadoresRompecabezas';
-import EncuentraParejas from './pages/Juegos/EncuentraParejas';
-import AsociaImagenes from './pages/Juegos/AsociacionImagenes';
-import ObjetosCotidianos from './pages/Juegos/ObjetosCotidianos';
+import RealizarOracion from './pages/Juegos/1-Observa RealizaOracion';
+import ArmadorRempecabezas from './pages/Juegos/2-ArmadoresConAcciones';
+import EncuentraParejas from './pages/Juegos/3-EncuentraParejas';
+import AsociaImagenes from './pages/Juegos/4-AsociacionImagenes';
+import ObjetosCotidianos from './pages/Juegos/5-ObjetosCotidianos';
 
 const App = () => {
   return (

@@ -23,7 +23,7 @@ const Home = () => {
       <div className="card-grid">
         {cards.slice(0, 3).map((card) => (
           <Link to={card.link} key={card.id}>
-            <div className="card">
+            <div className="home-card">
               <img src={card.img} alt={card.title} className="card-image" />
               <h3 className="card-title">{card.title}</h3>
             </div>
@@ -33,7 +33,7 @@ const Home = () => {
       <div className="card-grid2">
         {cards.slice(3, 5).map((card) => (
           <Link to={card.link} key={card.id}>
-            <div className="card2">
+            <div className="home-card2">
               <img src={card.img} alt={card.title} className="card-image" />
               <h3 className="card-title">{card.title}</h3>
             </div>

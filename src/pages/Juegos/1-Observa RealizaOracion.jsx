@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ObservaYRealiza.css";
+import "./1-Observa RealizaOracion.css";
 
 const ObservaYRealiza = () => {
   const [transcript, setTranscript] = useState("");
