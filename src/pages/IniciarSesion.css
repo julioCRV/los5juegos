@@ -1,3 +1,27 @@
+html, body {
+    margin: 0; /* Eliminar márgenes predeterminados */
+    padding: 0; /* Eliminar rellenos predeterminados */
+    height: 100%; /* Asegurar que ocupen toda la altura */
+    overflow: hidden; /* Evitar barras de desplazamiento */
+}
+
+.login-container {
+    position: absolute; /* Posicionar el contenedor relativo a la ventana */
+    top: 0; /* Alinear al borde superior */
+    left: 0; /* Alinear al borde izquierdo */
+    width: 100%; /* Ocupa todo el ancho */
+    height: 100%; /* Ocupa toda la altura */
+    background: #736e6e; /* Fondo blanco con transparencia */
+    display: flex; /* Flexbox para centrar contenido */
+    flex-direction: column; /* Alinear en columna */
+    justify-content: center; /* Centrar verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    box-sizing: border-box; /* Asegura que padding no afecte el tamaño */
+    overflow: hidden; /* Evita barras de desplazamiento */
+}
+
+
+
 .ContenedorPrincipal {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -12,6 +36,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .div2 {

@@ -16,6 +16,7 @@ const LoginForm = () => {
     };
 
     return (
+        <div className="login-container">
         <div className='ContenedorPrincipal'>
             <div className='div1'>
                 <img src={logoInicio} className='imagen' alt="Logo" />
@@ -52,6 +53,7 @@ const LoginForm = () => {
                 </form>
 
             </div>
+        </div>
         </div>
     );
 };

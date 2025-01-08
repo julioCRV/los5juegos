@@ -4,9 +4,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px;
     text-align: center;
-    background-color: #A8CBD2
+    background-color: #A8CBD2;
+    // height: 90vh;
+    // width: 80vw;
 }
 
 /* Título */
