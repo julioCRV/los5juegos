@@ -1,12 +1,30 @@
 import React, { useState } from "react";
+import { FaBars } from "react-icons/fa";
+import './NavbarModal.css';
 import "./1-Observa RealizaOracion.css";
+import ModalBien from "../../components/ModalCorrecto";
+import ModalMal from "../../components/ModalIncorrecto";
 
 const ObservaYRealiza = () => {
   const [transcript, setTranscript] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [message, setMessage] = useState("");
-  const [index, setIndex] = useState(Math.floor(Math.random() * 8) + 1);
-  
+  const [isOpen, setIsOpen] = useState(false);
+  const [idImagen, setIdImagen] = useState(Math.floor(Math.random() * 8) + 1);
+
+  const items = [
+    "Serpiente", "Taxi", "Tenis", "Peine", "Tijera", "Manzana", "Cuchara", "Vaso"
+  ];
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen); // Cambiar el estado del menú al hacer clic
+  };
+
+  // Función que maneja el clic en un ítem
+  const handleItemClick = (index, itemName) => {
+    setIdImagen(index);
+    setIsOpen(false);
+  };
 
   const startListening = () => {
     if (!("webkitSpeechRecognition" in window)) {
@@ -28,25 +46,25 @@ const ObservaYRealiza = () => {
 
       // Comprobar si la palabra "serpiente" está en el resultado
       let respuesta = "¡Incorrecto!";
-      if(index === 1 && result.includes("serpiente")){
+      if (idImagen === 1 && result.includes("serpiente")) {
         respuesta = "¡Correcto!"
-      }else if(index === 2 && result.includes("taxi")){
+      } else if (idImagen === 2 && result.includes("taxi")) {
         respuesta = "¡Correcto!"
-      }else if(index === 3 && result.includes("tenis")){
+      } else if (idImagen === 3 && result.includes("tenis")) {
         respuesta = "¡Correcto!"
-      }else if(index === 4 && result.includes("peine")){
+      } else if (idImagen === 4 && result.includes("peine")) {
         respuesta = "¡Correcto!"
-      }else if(index === 5 && result.includes("tijera")){
+      } else if (idImagen === 5 && result.includes("tijera")) {
         respuesta = "¡Correcto!"
-      }else if(index === 6 && result.includes("manzana")){
+      } else if (idImagen === 6 && result.includes("manzana")) {
         respuesta = "¡Correcto!"
-      }else if(index === 7 && result.includes("cuchara")){
+      } else if (idImagen === 7 && result.includes("cuchara")) {
         respuesta = "¡Correcto!"
-      }else if(index === 8 && result.includes("vaso")){
+      } else if (idImagen === 8 && result.includes("vaso")) {
         respuesta = "¡Correcto!"
       }
 
-      
+
       setMessage(respuesta);
     };
 
@@ -64,36 +82,82 @@ const ObservaYRealiza = () => {
   };
 
   return (
-    <div className="observa-container">
-      <h2 className="observa-title">Observa y realiza una oración</h2>
-      <div className="observa-row">
-        <img
-          src={`/src/assets/g1${index}.svg`} // Cambia esta ruta según tu imagen
-          alt="Ejemplo"
-          className="observa-image"
-        />
-        <button
-          className={`mic-button ${isListening ? "listening" : ""}`}
-          onClick={startListening}
-          disabled={isListening} // Deshabilita el botón durante la escucha
-        >
+    <>
+      <div className="observa-container">
+        <h2 className="observa-title">Observa y realiza una oración</h2>
+        <div className="observa-row">
           <img
-            src="/src/assets/microfono.svg" // Ruta de la imagen del micrófono
-            alt="Micrófono"
-            className="mic-icon"
+            src={`/src/assets/Juego1/g1${idImagen}.svg`} // Cambia esta ruta según tu imagen
+            alt="Ejemplo"
+            className="observa-image"
           />
-        </button>
-      </div>
-      <div className="observa-transcript">
-        {transcript ? transcript : "Presiona el micrófono para hablar..."}
-      </div>
-      {message && (
-        <div className={`message ${message === "¡Correcto!" ? "correct" : "incorrect"}`}>
-          {message}
+          <button
+            className={`mic-button ${isListening ? "listening" : ""}`}
+            onClick={startListening}
+            disabled={isListening} // Deshabilita el botón durante la escucha
+          >
+            <img
+              src="/src/assets/microfono.svg" // Ruta de la imagen del micrófono
+              alt="Micrófono"
+              className="mic-icon"
+            />
+          </button>
         </div>
-      )}
-    </div>
+        <div className="observa-transcript">
+          <input
+            type="text"
+            value={transcript}
+            onChange={(e) => setTranscript(e.target.value)} // Actualiza el estado `transcript`
+            placeholder="Presiona el micrófono para hablar..."
+            className="transcript-input"
+          />
+        </div>
+
+        <div>
+          {message && (
+            <>
+              {message === "¡Correcto!" ? (
+                <ModalBien />
+              ) : (
+                <ModalMal />
+              )}
+            </>
+          )}
+        </div>
+      </div>
+
+      <div>
+        {(!isOpen && (
+          <FaBars size={30} color="black" className="menu-icon" onClick={toggleMenu} />
+        ))}
+
+        {isOpen && (
+          <div className="modal-Nav-overlay">
+            <div className="navbar-container">
+              <div className="dropdown-menu">
+                <h3 className="menu-title">OPCIONES</h3>
+                <ul className="menu-list">
+                  {items.map((item, index) => (
+                    <li
+                      key={index}
+                      className={`menu-item ${idImagen === index + 1 ? 'selected' : ''}`}
+                      onClick={() => handleItemClick(index + 1, item)} // Llamada con índice y nombre
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="overlay" onClick={() => setIsOpen(false)}></div> {/* Cierra el modal al hacer clic fuera */}
+          </div>
+        )}
+      </div>
+    </>
+
   );
 };
 
 export default ObservaYRealiza;
+
+
