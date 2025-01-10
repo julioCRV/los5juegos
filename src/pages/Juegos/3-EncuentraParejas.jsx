@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './3-EncuentraParejas.css';
+import ModalGanar from "../../components/ModalCorrecto";
+import ModalPerder from "../../components/ModalIncorrecto";
 
 const MemoryGame = () => {
   const [cards, setCards] = useState([]);
@@ -9,16 +11,16 @@ const MemoryGame = () => {
 
   useEffect(() => {
     const initialCards = [
-      { id: 1, pairId: 1, image: '/src/assets/g31.svg', flipped: false },
-      { id: 2, pairId: 1, image: '/src/assets/g32.svg', flipped: false },
-      { id: 3, pairId: 2, image: '/src/assets/g33.svg', flipped: false },
-      { id: 4, pairId: 2, image: '/src/assets/g34.svg', flipped: false },
-      { id: 5, pairId: 3, image: '/src/assets/g35.svg', flipped: false },
-      { id: 6, pairId: 3, image: '/src/assets/g36.svg', flipped: false },
-      { id: 7, pairId: 4, image: '/src/assets/g37.svg', flipped: false },
-      { id: 8, pairId: 4, image: '/src/assets/g38.svg', flipped: false },
-      { id: 9, pairId: 5, image: '/src/assets/g39.svg', flipped: false },
-      { id: 10, pairId: 5, image: '/src/assets/g310.svg', flipped: false },
+      { id: 1, pairId: 1, image: '/src/assets/Juego3/g31.svg', flipped: false },
+      { id: 2, pairId: 1, image: '/src/assets/Juego3/g32.svg', flipped: false },
+      { id: 3, pairId: 2, image: '/src/assets/Juego3/g33.svg', flipped: false },
+      { id: 4, pairId: 2, image: '/src/assets/Juego3/g34.svg', flipped: false },
+      { id: 5, pairId: 3, image: '/src/assets/Juego3/g35.svg', flipped: false },
+      { id: 6, pairId: 3, image: '/src/assets/Juego3/g36.svg', flipped: false },
+      { id: 7, pairId: 4, image: '/src/assets/Juego3/g37.svg', flipped: false },
+      { id: 8, pairId: 4, image: '/src/assets/Juego3/g38.svg', flipped: false },
+      { id: 9, pairId: 5, image: '/src/assets/Juego3/g39.svg', flipped: false },
+      { id: 10, pairId: 5, image: '/src/assets/Juego3/g310.svg', flipped: false },
     ];
     setCards(shuffleArray(initialCards));
   }, []);
@@ -64,8 +66,8 @@ const MemoryGame = () => {
   return (
     <div className="memory-game">
       <div className="status">
-        <p>Intentos fallidos: {attempts}/3</p>
-        <h1>Encuentra parejas</h1>
+        <p className="again">Intentos fallidos: {attempts}/3</p>
+        <h2 className="observa-title">Encuentra parejas</h2>
       </div>
       <div className="cards">
         {cards.map((card, index) => (
@@ -83,16 +85,10 @@ const MemoryGame = () => {
         ))}
       </div>
       {matchedPairs === 5 && (
-        <div className="game-over">
-          <h2>¡Has ganado!</h2>
-          <button onClick={resetGame}>Reiniciar</button>
-        </div>
+        <ModalGanar text={"¡HAS GANADO!"} activarBoton={"si"} resetGame={resetGame}/>
       )}
       {attempts >= 3 && matchedPairs < 5 && (
-        <div className="game-over">
-          <h2>¡Has perdido!</h2>
-          <button onClick={resetGame}>Reintentar</button>
-        </div>
+        <ModalPerder text={"¡HAS PERDIDO!"} activarBoton={"si"} resetGame={resetGame}/>
       )}
     </div>
   );

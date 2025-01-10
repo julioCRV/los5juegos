@@ -117,9 +117,9 @@ const ObservaYRealiza = () => {
           {message && (
             <>
               {message === "¡Correcto!" ? (
-                <ModalGanar />
+                <ModalGanar text={"¡CORRECTO!"} />
               ) : (
-                <ModalPerder />
+                <ModalPerder text={"¡INCORRECTO!"} />
               )}
             </>
           )}

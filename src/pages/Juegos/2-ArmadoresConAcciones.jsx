@@ -161,9 +161,7 @@ const GameComponent = () => {
         <>
             <div className="game-container">
                 <h2 className="observa-title">Armadores con acciones</h2>
-                <div className="header">
-                    <div>Intentos fallidos: {failedAttempts}/3</div>
-                </div>
+                <p className='again'>Intentos fallidos: {failedAttempts}/3</p>
                 <div className="game-board">
                     <div className="available-images">
                         <div className="title-row">
@@ -253,7 +251,7 @@ const GameComponent = () => {
             <div>
                 {mostrarModal && (
                     <>
-                        {ganar === true ? (<ModalGanar />) : (<ModalPerder />)}
+                        {ganar === true ? (<ModalGanar text={"¡CORRECTO!"} />) : (<ModalPerder text={"¡INCORRECTO!"} />)}
                     </>
                 )}
             </div>
