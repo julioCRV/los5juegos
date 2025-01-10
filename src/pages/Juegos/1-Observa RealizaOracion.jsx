@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import './NavbarModal.css';
 import "./1-Observa RealizaOracion.css";
-import ModalBien from "../../components/ModalCorrecto";
-import ModalMal from "../../components/ModalIncorrecto";
+import ModalGanar from "../../components/ModalCorrecto";
+import ModalPerder from "../../components/ModalIncorrecto";
 
 const ObservaYRealiza = () => {
   const [transcript, setTranscript] = useState("");
@@ -21,7 +21,7 @@ const ObservaYRealiza = () => {
   };
 
   // Función que maneja el clic en un ítem
-  const handleItemClick = (index, itemName) => {
+  const handleItemClick = (index) => {
     setIdImagen(index);
     setIsOpen(false);
   };
@@ -117,9 +117,9 @@ const ObservaYRealiza = () => {
           {message && (
             <>
               {message === "¡Correcto!" ? (
-                <ModalBien />
+                <ModalGanar />
               ) : (
-                <ModalMal />
+                <ModalPerder />
               )}
             </>
           )}
