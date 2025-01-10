@@ -25,12 +25,12 @@ const GameComponent = () => {
     const [failedAttempts, setFailedAttempts] = useState(0); // Intentos fallidos del jugador
     const [timeElapsed, setTimeElapsed] = useState(0); // Tiempo transcurrido desde que comenzó el juego
     const [availableImages, setAvailableImages] = useState([
-        { id: numeros[0], src: '/src/assets/Juego2/g2' + numero + '' + numeros[0] + '.svg' },
-        { id: numeros[1], src: '/src/assets/Juego2/g2' + numero + '' + numeros[1] + '.svg' },
-        { id: numeros[2], src: '/src/assets/Juego2/g2' + numero + '' + numeros[2] + '.svg' },
-        { id: numeros[3], src: '/src/assets/Juego2/g2' + numero + '' + numeros[3] + '.svg' },
-        { id: numeros[4], src: '/src/assets/Juego2/g2' + numero + '' + numeros[4] + '.svg' },
-        { id: numeros[5], src: '/src/assets/Juego2/g2' + numero + '' + numeros[5] + '.svg' },
+        { id: numeros[0], src: '/assets/Juego2/g2' + numero + '' + numeros[0] + '.svg' },
+        { id: numeros[1], src: '/assets/Juego2/g2' + numero + '' + numeros[1] + '.svg' },
+        { id: numeros[2], src: '/assets/Juego2/g2' + numero + '' + numeros[2] + '.svg' },
+        { id: numeros[3], src: '/assets/Juego2/g2' + numero + '' + numeros[3] + '.svg' },
+        { id: numeros[4], src: '/assets/Juego2/g2' + numero + '' + numeros[4] + '.svg' },
+        { id: numeros[5], src: '/assets/Juego2/g2' + numero + '' + numeros[5] + '.svg' },
     ]);
     const [sequence, setSequence] = useState(Array(6).fill(null)); // Secuencia actual de imágenes colocadas en el tablero
     const [gameMatrix, setGameMatrix] = useState([
@@ -44,7 +44,7 @@ const GameComponent = () => {
         const numeros = [1, 2, 3, 4, 5, 6]; // Ejemplo de números de imágenes
         return numeros.map((num, index) => ({
             id: num,
-            src: `/src/assets/Juego2/g2${numero}${num}.svg`
+            src: `/assets/Juego2/g2${numero}${num}.svg`
         }));
     };
 
@@ -166,7 +166,7 @@ const GameComponent = () => {
                     <div className="available-images">
                         <div className="title-row">
                             <h3>Imágenes disponibles:</h3>
-                            <img src="../src/assets/timer.svg" alt="Timer" className="timer-icon" />
+                            <img src="../assets/timer.svg" alt="Timer" className="timer-icon" />
                             <div>{timeElapsed}s</div>
                         </div>
                         <div className="images-row">

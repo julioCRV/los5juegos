@@ -28,7 +28,7 @@ const ImageAssociationGame = () => {
 
   const images = numeros.map((num, i) => ({
     id: i + 1,
-    src: `/src/assets/Juego4/g4${num}.svg`,
+    src: `/assets/Juego4/g4${num}.svg`,
     isCorrect: num === index,
   }));
 

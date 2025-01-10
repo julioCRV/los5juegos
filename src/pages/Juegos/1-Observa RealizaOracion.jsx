@@ -87,7 +87,7 @@ const ObservaYRealiza = () => {
         <h2 className="observa-title">Observa y realiza una oración</h2>
         <div className="observa-row">
           <img
-            src={`/src/assets/Juego1/g1${idImagen}.svg`} // Cambia esta ruta según tu imagen
+            src={`/assets/Juego1/g1${idImagen}.svg`} // Cambia esta ruta según tu imagen
             alt="Ejemplo"
             className="observa-image"
           />
@@ -97,7 +97,7 @@ const ObservaYRealiza = () => {
             disabled={isListening} // Deshabilita el botón durante la escucha
           >
             <img
-              src="/src/assets/microfono.svg" // Ruta de la imagen del micrófono
+              src="/assets/microfono.svg" // Ruta de la imagen del micrófono
               alt="Micrófono"
               className="mic-icon"
             />

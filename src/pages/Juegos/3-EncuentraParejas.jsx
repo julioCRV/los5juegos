@@ -11,16 +11,16 @@ const MemoryGame = () => {
 
   useEffect(() => {
     const initialCards = [
-      { id: 1, pairId: 1, image: '/src/assets/Juego3/g31.svg', flipped: false },
-      { id: 2, pairId: 1, image: '/src/assets/Juego3/g32.svg', flipped: false },
-      { id: 3, pairId: 2, image: '/src/assets/Juego3/g33.svg', flipped: false },
-      { id: 4, pairId: 2, image: '/src/assets/Juego3/g34.svg', flipped: false },
-      { id: 5, pairId: 3, image: '/src/assets/Juego3/g35.svg', flipped: false },
-      { id: 6, pairId: 3, image: '/src/assets/Juego3/g36.svg', flipped: false },
-      { id: 7, pairId: 4, image: '/src/assets/Juego3/g37.svg', flipped: false },
-      { id: 8, pairId: 4, image: '/src/assets/Juego3/g38.svg', flipped: false },
-      { id: 9, pairId: 5, image: '/src/assets/Juego3/g39.svg', flipped: false },
-      { id: 10, pairId: 5, image: '/src/assets/Juego3/g310.svg', flipped: false },
+      { id: 1, pairId: 1, image: '/assets/Juego3/g31.svg', flipped: false },
+      { id: 2, pairId: 1, image: '/assets/Juego3/g32.svg', flipped: false },
+      { id: 3, pairId: 2, image: '/assets/Juego3/g33.svg', flipped: false },
+      { id: 4, pairId: 2, image: '/assets/Juego3/g34.svg', flipped: false },
+      { id: 5, pairId: 3, image: '/assets/Juego3/g35.svg', flipped: false },
+      { id: 6, pairId: 3, image: '/assets/Juego3/g36.svg', flipped: false },
+      { id: 7, pairId: 4, image: '/assets/Juego3/g37.svg', flipped: false },
+      { id: 8, pairId: 4, image: '/assets/Juego3/g38.svg', flipped: false },
+      { id: 9, pairId: 5, image: '/assets/Juego3/g39.svg', flipped: false },
+      { id: 10, pairId: 5, image: '/assets/Juego3/g310.svg', flipped: false },
     ];
     setCards(shuffleArray(initialCards));
   }, []);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logoInicio from '../assets/iconos/logoInicio.svg'
+import logoInicio from '../../public/assets/iconos/logoInicio.svg'
 import './IniciarSesion.css'; // Importa el archivo CSS
 
 const LoginForm = () => {
