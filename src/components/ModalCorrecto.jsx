@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './ModalEstilo.css';
-import ModalCorrecto from '../../public/assets/iconos/correcto.svg'
+import ModalCorrecto from '/assets/iconos/correcto.svg'
 
 const ModalBien = ({ text, activarBoton, resetGame }) => {
   const [isActivate, setIsActivate] = useState(false);

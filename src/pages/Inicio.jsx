@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Inicio.css";
 
-import ojoIcon from '../../public/assets/iconos/ojo.svg';
-import armadoresIcon from '../../public/assets/iconos/armadores.svg';
-import cartasIcon from '../../public/assets/iconos/cartas.svg';
-import imagenIcon from '../../public/assets/iconos/imagenes.svg';
-import objetosIcon from '../../public/assets/iconos/objetos.svg';
+import ojoIcon from '/assets/iconos/ojo.svg';
+import armadoresIcon from '/assets/iconos/armadores.svg';
+import cartasIcon from '/assets/iconos/cartas.svg';
+import imagenIcon from '/assets/iconos/imagenes.svg';
+import objetosIcon from '/assets/iconos/objetos.svg';
 
 const Home = () => {
   const cards = [

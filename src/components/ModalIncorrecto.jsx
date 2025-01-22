@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import './ModalEstilo.css';
-import IconIncorrecto from '../../public/assets/iconos/incorrecto.svg';
+import IconIncorrecto from '/assets/iconos/incorrecto.svg';
 
 const ModalMal = ({ text, activarBoton, resetGame }) => {
 
