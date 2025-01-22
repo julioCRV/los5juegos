@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FaBars } from "react-icons/fa";
-import './NavbarModal.css';
 import "./1-Observa RealizaOracion.css";
 import ModalGanar from "../../components/ModalCorrecto";
 import ModalPerder from "../../components/ModalIncorrecto";
@@ -9,22 +7,8 @@ const ObservaYRealiza = () => {
   const [transcript, setTranscript] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [message, setMessage] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
   const [idImagen, setIdImagen] = useState(Math.floor(Math.random() * 8) + 1);
 
-  const items = [
-    "Serpiente", "Taxi", "Tenis", "Peine", "Tijera", "Manzana", "Cuchara", "Vaso"
-  ];
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen); // Cambiar el estado del menú al hacer clic
-  };
-
-  // Función que maneja el clic en un ítem
-  const handleItemClick = (index) => {
-    setIdImagen(index);
-    setIsOpen(false);
-  };
 
   const startListening = () => {
     if (!("webkitSpeechRecognition" in window)) {
@@ -82,7 +66,6 @@ const ObservaYRealiza = () => {
   };
 
   return (
-    <>
       <div className="observa-container">
         <h2 className="observa-title">Observa y realiza una oración</h2>
         <div className="observa-row">
@@ -125,36 +108,6 @@ const ObservaYRealiza = () => {
           )}
         </div>
       </div>
-
-      <div>
-        {(!isOpen && (
-          <FaBars size={30} color="black" className="menu-icon" onClick={toggleMenu} />
-        ))}
-
-        {isOpen && (
-          <div className="modal-Nav-overlay">
-            <div className="navbar-container">
-              <div className="dropdown-menu">
-                <h3 className="menu-title">OPCIONES</h3>
-                <ul className="menu-list">
-                  {items.map((item, index) => (
-                    <li
-                      key={index}
-                      className={`menu-item ${idImagen === index + 1 ? 'selected' : ''}`}
-                      onClick={() => handleItemClick(index + 1, item)} // Llamada con índice y nombre
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="overlay" onClick={() => setIsOpen(false)}></div> {/* Cierra el modal al hacer clic fuera */}
-          </div>
-        )}
-      </div>
-    </>
-
   );
 };
 
