@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './3-EncuentraParejas.css';
+import { useNavigate } from 'react-router-dom';
 import ModalGanar from "../../components/ModalCorrecto";
 import ModalPerder from "../../components/ModalIncorrecto";
 
@@ -10,6 +11,7 @@ const MemoryGame = () => {
   const [attempts, setAttempts] = useState(0);
   const [showAllCards, setShowAllCards] = useState(true);
   const [numerosImpares, setNumerosImpares] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const generarNumerosImpares = () => {
@@ -28,7 +30,6 @@ const MemoryGame = () => {
 
   useEffect(() => {
     if (numerosImpares.length === 5) {
-      console.log(numerosImpares)
       const initialCards = [
         { id: 1, pairId: 1, image: `/assets/Juego3/g3${numerosImpares[0]}.svg`, flipped: true },
         { id: 2, pairId: 1, image: `/assets/Juego3/g3${numerosImpares[0] + 1}.svg`, flipped: true },
@@ -84,8 +85,16 @@ const MemoryGame = () => {
     }
   };
 
+  useEffect(() => {
+    if (matchedPairs === 5) {
+      setTimeout(() => {
+        navigate('/Inicio');
+      }, 1400);
+    } 
+  }, [matchedPairs]); 
+
   const resetGame = () => {
-    setCards(shuffleArray(cards.map(card => ({ ...card, flipped: true })))); 
+    setCards(shuffleArray(cards.map(card => ({ ...card, flipped: true }))));
     setFlippedCards([]);
     setMatchedPairs(0);
     setAttempts(0);
@@ -120,7 +129,7 @@ const MemoryGame = () => {
         ))}
       </div>
       {matchedPairs === 5 && (
-        <ModalGanar text={"¡HAS GANADO!"} activarBoton={"si"} resetGame={resetGame} />
+        <ModalGanar text={"¡HAS GANADO!"} />
       )}
       {attempts >= 5 && matchedPairs < 5 && (
         <ModalPerder text={"¡HAS PERDIDO!"} activarBoton={"si"} resetGame={resetGame} />
