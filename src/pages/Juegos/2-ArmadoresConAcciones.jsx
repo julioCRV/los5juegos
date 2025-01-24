@@ -1,7 +1,7 @@
 // Importando hooks y CSS necesarios para el componente
 import React, { useState, useEffect } from 'react';
 import './2-ArmadoresConAcciones.css';
-import { FaBars } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 import ModalGanar from "../../components/ModalCorrecto";
 import ModalPerder from "../../components/ModalIncorrecto";
 
@@ -12,13 +12,9 @@ const GameComponent = () => {
         [1, 2, 3], // Primera fila
         [4, 5, 6], // Segunda fila
     ];
-
-    const numeros = [1, 2, 3, 4, 5, 6];
-
-
-    // Mezclar números y tomar los primeros 5
-    const arreglo = numeros.sort(() => Math.random() - 0.5).slice(0, 5);
-    const [numero, setNumero] = useState(Math.floor(Math.random() * 2) + 1);
+    const navigate = useNavigate();
+    const numeros = [1, 2, 3, 4, 5, 6]; 5
+    const [numero, setNumero] = useState(Math.floor(Math.random() * 4) + 1);
 
     // Definición de los estados usando useState
     const [failedAttempts, setFailedAttempts] = useState(0); // Intentos fallidos del jugador
@@ -38,35 +34,9 @@ const GameComponent = () => {
     ]);
     const maxAvailableSlots = 6; // Número máximo de espacios disponibles para las imágenes
 
-    // Función para generar las imágenes según el número
-    const generateImages = (numero) => {
-        const numeros = [1, 2, 3, 4, 5, 6]; // Ejemplo de números de imágenes
-        return numeros.map((num, index) => ({
-            id: num,
-            src: `/assets/Juego2/g2${numero}${num}.svg`
-        }));
-    };
-
     // Menu para la navegación entre juegos
     const [ganar, setGanar] = useState(false);
     const [mostrarModal, setMostrarModal] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-
-    const items = [
-        "Secuencia 1", "Secuencia 2"
-    ];
-
-    const toggleMenu = () => {
-        setIsOpen(!isOpen); // Cambiar el estado del menú al hacer clic
-    };
-
-    // Función que maneja el clic en un ítem
-    const handleItemClick = (index) => {
-        setNumero(index);
-        setAvailableImages(generateImages(index)); // Actualiza las imágenes
-        setSequence(Array(6).fill(null));
-        setIsOpen(false);
-    };
 
     // useEffect para crear un temporizador que aumenta cada segundo
     useEffect(() => {
@@ -78,9 +48,13 @@ const GameComponent = () => {
 
     // Maneja el inicio del arrastre (drag) de una imagen
     const handleDragStart = (event, image, sourceType) => {
-        if (failedAttempts === 3) {
+        if (failedAttempts === 1) {
             setGanar(false);
             setMostrarModal(true);
+            // Agregar un delay de 3 segundos antes de redirigir
+            setTimeout(() => {
+                navigate('/Inicio');
+            }, 1400);
         } else {
             event.dataTransfer.setData('imageId', image.id);
             event.dataTransfer.setData('sourceType', sourceType);
@@ -135,6 +109,10 @@ const GameComponent = () => {
             if (isWin) {
                 setGanar(true);
                 setMostrarModal(true);
+                // Agregar un delay de 3 segundos antes de redirigir
+                setTimeout(() => {
+                    navigate('/Inicio');
+                }, 1400);
             }
 
             // Actualizar estados
@@ -160,13 +138,13 @@ const GameComponent = () => {
         <>
             <div className="game-container">
                 <h2 className="observa-title">Armadores con acciones</h2>
-                <p className='again'>Intentos fallidos: {failedAttempts}/3</p>
+                <p className='again'>Intentos fallidos: {failedAttempts}/1</p>
                 <div className="game-board">
                     <div className="available-images">
                         <div className="title-row">
                             <h3>Imágenes disponibles:</h3>
                             <img src="../assets/timer.svg" alt="Timer" className="timer-icon" />
-                            <div>{timeElapsed}s</div>
+                            <div>{timeElapsed} s</div>
                         </div>
                         <div className="images-row">
                             {Array.from({ length: maxAvailableSlots }).map((_, index) => (
