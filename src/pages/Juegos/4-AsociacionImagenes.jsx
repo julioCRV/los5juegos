@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./4-AsociacionImagenes.css";
 import { useNavigate } from "react-router-dom";
-import ModalGanar from "../../components/ModalCorrecto";
-import ModalPerder from "../../components/ModalIncorrecto";
+  import ModalGanar from "../../components/ModalCorrecto";
+  import ModalPerder from "../../components/ModalIncorrecto";
 
 const ImageAssociationGame = () => {
   const [failedAttempts, setFailedAttempts] = useState(0);
