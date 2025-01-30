@@ -34,6 +34,7 @@ const LoginForm = () => {
             const result = await response.json();
 
             if (result.message === "Login exitoso") {
+                localStorage.setItem('idusuario', result.idusuario)
                 setOpenModal(true);
                 setMessage(true)
                 setTimeout(() => {

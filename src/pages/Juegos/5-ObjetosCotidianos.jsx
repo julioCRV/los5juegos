@@ -5,6 +5,7 @@ import ModalGanar from "../../components/ModalCorrecto";
 import ModalPerder from "../../components/ModalIncorrecto";
 
 const Game = () => {
+    const idusuario = localStorage.getItem('idusuario');
     const [feedback, setFeedback] = useState("");
     const [dropped, setDropped] = useState(false);
     const [idItem, setIdItem] = useState(Math.floor(Math.random() * 6) + 1);
@@ -86,13 +87,19 @@ const Game = () => {
             setFeedback("Bien");
             setDropped(true);
             setTimeout(() => {
-                navigate('/Inicio');
+                (async () => {
+                    await guardarPuntaje('https://afhasiajuegos.tech/juegos/winner_5.php');
+                    navigate('/Inicio');
+                })();
             }, 1400);
         } else {
             setFeedback("Mal");
             setDropped(true);
             setTimeout(() => {
-                navigate('/Inicio');
+                (async () => {
+                    await guardarPuntaje('https://afhasiajuegos.tech/juegos/over_5.php');
+                    navigate('/Inicio');
+                })();
             }, 1400);
         }
     };
@@ -100,6 +107,36 @@ const Game = () => {
     const handleDragOver = (e) => {
         e.preventDefault();
     };
+
+    //Metodo para guarda el resultado del juego
+    const guardarPuntaje = async (url) => {
+        const body = {
+            cod_user: idusuario,
+        };
+
+        try {
+            // Realizando la solicitud POST
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+
+            // Verificando si la respuesta es exitosa
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Guardado correctamente');
+                return result;
+            } else {
+                console.error('Error en la solicitud:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Hubo un error en la solicitud:', error);
+        }
+    };
+
 
     return (
         <div className="game-container">

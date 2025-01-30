@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import "./Inicio.css";
 
 import ojoIcon from '/assets/iconos/ojo.svg';
@@ -9,6 +10,9 @@ import imagenIcon from '/assets/iconos/imagenes.svg';
 import objetosIcon from '/assets/iconos/objetos.svg';
 
 const Home = () => {
+  const location = useLocation();
+  const { idusuario } = location.state || {};  // Accedemos al idusuario desde el estado
+
   const cards = [
     { id: 1, title: "Observa y realiza una oración", img: ojoIcon, link: "/realizar-oración" },
     { id: 2, title: "Armadores con acciones", img: armadoresIcon, link: "/armar-rompecabeza" },

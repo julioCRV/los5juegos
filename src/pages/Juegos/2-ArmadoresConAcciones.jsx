@@ -7,6 +7,7 @@ import ModalPerder from "../../components/ModalIncorrecto";
 
 // Componente principal del juego
 const GameComponent = () => {
+    const idusuario = localStorage.getItem('idusuario');
     // Matriz correcta que contiene la secuencia de imágenes (filas y columnas)
     const correct = [
         [1, 2, 3], // Primera fila
@@ -19,14 +20,7 @@ const GameComponent = () => {
     // Definición de los estados usando useState
     const [failedAttempts, setFailedAttempts] = useState(0); // Intentos fallidos del jugador
     const [timeElapsed, setTimeElapsed] = useState(0); // Tiempo transcurrido desde que comenzó el juego
-    const [availableImages, setAvailableImages] = useState([
-        { id: numeros[0], src: '/assets/Juego2/g2' + numero + '' + numeros[0] + '.svg' },
-        { id: numeros[1], src: '/assets/Juego2/g2' + numero + '' + numeros[1] + '.svg' },
-        { id: numeros[2], src: '/assets/Juego2/g2' + numero + '' + numeros[2] + '.svg' },
-        { id: numeros[3], src: '/assets/Juego2/g2' + numero + '' + numeros[3] + '.svg' },
-        { id: numeros[4], src: '/assets/Juego2/g2' + numero + '' + numeros[4] + '.svg' },
-        { id: numeros[5], src: '/assets/Juego2/g2' + numero + '' + numeros[5] + '.svg' },
-    ]);
+    const [availableImages, setAvailableImages] = useState([]);
     const [sequence, setSequence] = useState(Array(6).fill(null)); // Secuencia actual de imágenes colocadas en el tablero
     const [gameMatrix, setGameMatrix] = useState([
         [0, 0, 0], // Primera fila
@@ -38,13 +32,34 @@ const GameComponent = () => {
     const [ganar, setGanar] = useState(false);
     const [mostrarModal, setMostrarModal] = useState(false);
 
+    const shuffleArray = (array) => {
+        return array.sort(() => Math.random() - 0.5);
+    };
+
+    useEffect(() => {
+        const images = [
+            { id: numeros[0], src: `/assets/Juego2/g2${numero}${numeros[0]}.svg` },
+            { id: numeros[1], src: `/assets/Juego2/g2${numero}${numeros[1]}.svg` },
+            { id: numeros[2], src: `/assets/Juego2/g2${numero}${numeros[2]}.svg` },
+            { id: numeros[3], src: `/assets/Juego2/g2${numero}${numeros[3]}.svg` },
+            { id: numeros[4], src: `/assets/Juego2/g2${numero}${numeros[4]}.svg` },
+            { id: numeros[5], src: `/assets/Juego2/g2${numero}${numeros[5]}.svg` },
+        ];
+
+        setAvailableImages(shuffleArray(images)); // Mezcla y establece las imágenes
+    }, []); // Se ejecuta solo una vez al cargar el componente
+
     // useEffect para crear un temporizador que aumenta cada segundo
     useEffect(() => {
-        const timer = setInterval(() => {
-            setTimeElapsed((prev) => prev + 1); // Aumenta el contador de tiempo
-        }, 1000);
-        return () => clearInterval(timer); // Limpiar el temporizador cuando el componente se desmonte
-    }, []);
+        if (!ganar) { // Solo inicia si no se ha ganado aún
+            const timer = setInterval(() => {
+                setTimeElapsed((prev) => prev + 1);
+            }, 1000);
+
+            return () => clearInterval(timer); // Limpia el temporizador al desmontar
+        }
+    }, [ganar]); // Se ejecuta cada vez que 'ganar' cambia
+
 
     // Maneja el inicio del arrastre (drag) de una imagen
     const handleDragStart = (event, image, sourceType) => {
@@ -53,8 +68,11 @@ const GameComponent = () => {
             setMostrarModal(true);
             // Agregar un delay de 3 segundos antes de redirigir
             setTimeout(() => {
-                navigate('/Inicio');
-            }, 1400);
+                (async () => {
+                    await guardarPuntaje('https://afhasiajuegos.tech/juegos/over_2.php');
+                    navigate('/Inicio');
+                })();
+            }, 1000);
         } else {
             event.dataTransfer.setData('imageId', image.id);
             event.dataTransfer.setData('sourceType', sourceType);
@@ -109,9 +127,11 @@ const GameComponent = () => {
             if (isWin) {
                 setGanar(true);
                 setMostrarModal(true);
-                // Agregar un delay de 3 segundos antes de redirigir
                 setTimeout(() => {
-                    navigate('/Inicio');
+                    (async () => {
+                        await guardarPuntaje('https://afhasiajuegos.tech/juegos/winner_2.php');
+                        navigate('/Inicio');
+                    })();
                 }, 1400);
             }
 
@@ -132,6 +152,36 @@ const GameComponent = () => {
     // Permite el evento de arrastre en un área específica
     const handleDragOver = (event) => {
         event.preventDefault();
+    };
+
+    //Metodo para guarda el resultado del juego
+    const guardarPuntaje = async (url) => {
+        const body = {
+            cod_user: idusuario,
+            time: timeElapsed
+        };
+
+        try {
+            // Realizando la solicitud POST
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+
+            // Verificando si la respuesta es exitosa
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Guardado correctamente');
+                return result;
+            } else {
+                console.error('Error en la solicitud:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Hubo un error en la solicitud:', error);
+        }
     };
 
     return (
@@ -201,7 +251,7 @@ const GameComponent = () => {
             <div>
                 {mostrarModal && (
                     <>
-                        {ganar === true ? (<ModalGanar text={"¡CORRECTO!"} />) : (<ModalPerder text={"¡INCORRECTO!"} />)}
+                        {ganar === true ? (<ModalGanar text={"¡CORRECTO!"} activarTiempo={"si"} time={timeElapsed} />) : (<ModalPerder text={"¡INCORRECTO!"} />)}
                     </>
                 )}
             </div>

@@ -1,4 +1,3 @@
-
 .game4-container {
   display: flex;
   flex-direction: column;
@@ -53,54 +52,74 @@
   transform: scale(1.1);
   border-color: #007bff;
 }
+
 .game-container {
-text-align: center;
-margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .failed-attempts {
-margin-bottom: 10px;
-font-size: 16px;
+  margin-bottom: 10px;
+  font-size: 16px;
 }
 
 .title-container {
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .title-container h2 {
-margin: 0;
-font-size: 24px;
+  margin: 0;
+  font-size: 24px;
+}
+
+.contain-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.again {
+  text-align: right;
+  color: red;
+}
+
+.again2 {
+  text-align: right;
+  margin-top: -10px;
+}
+
+.time {
+  text-align: left;
+  margin-bottom: 10px;
 }
 
 .timer {
-font-size: 18px;
-color: #555;
+  font-size: 18px;
+  color: #555;
 }
 
 .generated-text {
-margin-bottom: 20px;
-font-size: 18px;
-font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .image-grid {
-display: flex;
-justify-content: center;
-flex-wrap: wrap;
-gap: 10px;
-margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .game-image {
-width: 100px;
-height: 100px;
-cursor: pointer;
-border: 2px solid transparent;
-transition: transform 0.2s, border-color 0.2s;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.2s;
 }
 
 .game-image:hover {
-transform: scale(1.1);
-border-color: #007bff;
+  transform: scale(1.1);
+  border-color: #007bff;
 }
-

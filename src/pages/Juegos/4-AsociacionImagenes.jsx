@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./4-AsociacionImagenes.css";
 import { useNavigate } from "react-router-dom";
-  import ModalGanar from "../../components/ModalCorrecto";
-  import ModalPerder from "../../components/ModalIncorrecto";
+import ModalGanar from "../../components/ModalCorrecto";
+import ModalPerder from "../../components/ModalIncorrecto";
 
 const ImageAssociationGame = () => {
+  const idusuario = localStorage.getItem('idusuario');
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [correctAttempts, setCorrectAttempts] = useState(0);
   const [time, setTime] = useState(0);
@@ -71,26 +72,39 @@ const ImageAssociationGame = () => {
   useEffect(() => {
     shuffleImages(); // Inicializa las imágenes al montar el componente
 
-    const timer = setInterval(() => {
-      setTime((prev) => prev + 1);
-    }, 1000);
+    if (failedAttempts != 3) {
+      const timer = setInterval(() => {
+        setTime((prev) => prev + 1);
+      }, 1000);
 
-    const shuffleTimer = setInterval(() => {
-      shuffleImages();
-    }, 3000);
 
-    return () => {
-      clearInterval(timer);
-      clearInterval(shuffleTimer);
-    };
-  }, [index]);
+      const shuffleTimer = setInterval(() => {
+        shuffleImages();
+      }, 3000);
+
+      return () => {
+        clearInterval(timer);
+        clearInterval(shuffleTimer);
+      };
+    }
+  }, [index, isCorrect]);
+
+  useEffect(() => {
+    if (failedAttempts === 3) {
+      setTimeout(() => {
+        (async () => {
+          await guardarPuntaje('https://afhasiajuegos.tech/juegos/over_4.php');
+          navigate('/Inicio');
+        })();
+      }, 1400);
+    }
+  }, [failedAttempts]);
 
   const handleImageClick = (image) => {
     if (image.isCorrect) {
       const newCorrects = correctAttempts + 1;
       setCorrectAttempts(newCorrects);
       setIndex(Math.floor(Math.random() * 15) + 1); // Nuevo índice aleatorio
-      setTime(0);
       setOpenModal(true);
       setTimeout(() => {
         setOpenModal(false);
@@ -98,37 +112,64 @@ const ImageAssociationGame = () => {
       setIsCorrect(true);
       if (correctAttempts === 2) {
         setTimeout(() => {
-          navigate('/Inicio');
+          (async () => {
+            await guardarPuntaje('https://afhasiajuegos.tech/juegos/winner_4.php');
+            navigate('/Inicio');
+          })();
         }, 1400);
       }
     } else {
       const newAttempts = failedAttempts + 1;
       setIsCorrect(false);
       setOpenModal(true);
-      if(newAttempts != 3){
+      if (newAttempts != 3) {
         setTimeout(() => {
           setOpenModal(false);
         }, 1400);
       }
       setFailedAttempts(newAttempts);
       setIndex(Math.floor(Math.random() * 15) + 1); // Nuevo índice aleatorio
-      setTime(0);
     }
   };
 
-  const closeModal = () => {
-    setOpenModal(false);
-    setIndex(Math.floor(Math.random() * 15) + 1); // Nuevo índice aleatorio
-    setTime(0);
-    setFailedAttempts(0);
-    setCorrectAttempts(0);
-  }
+  //Metodo para guarda el resultado del juego
+  const guardarPuntaje = async (url) => {
+    const body = {
+      cod_user: idusuario,
+      time: time
+    };
+
+    try {
+      // Realizando la solicitud POST
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      // Verificando si la respuesta es exitosa
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Guardado correctamente');
+        return result;
+      } else {
+        console.error('Error en la solicitud:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Hubo un error en la solicitud:', error);
+    }
+  };
 
   return (
     <div className="game4-container">
       <div className="failed-attempts">
-        <p className="again">Intentos fallidos: {failedAttempts}/3</p>
-        <div className="timer">⏱️ {time}s</div>
+        <div className="contain-top">
+          <div className="timer">⏱️ {time}s</div>
+          <p className="again">Intentos fallidos: {failedAttempts}/3</p>
+        </div>
+        <p className="again2">Aciertos: {correctAttempts}/3</p>
       </div>
       <div className="title-container">
         <h2 className="observa-title">Asociación con imágenes</h2>
@@ -148,7 +189,7 @@ const ImageAssociationGame = () => {
       {openModal && (
         <>
           {failedAttempts === 3 ? (
-            <ModalPerder text={"¡PERDISTE! Reinicia el juego."} activarBoton={"si"} resetGame={closeModal} />
+            <ModalPerder text={"¡PERDISTE! Reinicia el juego."} />
           ) : (
             <>
               {isCorrect === true ? (

@@ -5,8 +5,10 @@ import ModalGanar from "../../components/ModalCorrecto";
 import ModalPerder from "../../components/ModalIncorrecto";
 
 const MemoryGame = () => {
+  const idusuario = localStorage.getItem('idusuario');
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
+  const [timeElapsed, setTimeElapsed] = useState(0); // Tiempo transcurrido desde que comenzó el juego
   const [matchedPairs, setMatchedPairs] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [showAllCards, setShowAllCards] = useState(true);
@@ -86,31 +88,72 @@ const MemoryGame = () => {
   };
 
   useEffect(() => {
+    if (matchedPairs != 5) { // Solo inicia si no se ha ganado aún
+      const timer = setInterval(() => {
+        setTimeElapsed((prev) => prev + 1);
+      }, 1000);
+
+      return () => clearInterval(timer); // Limpia el temporizador al desmontar
+    }
+
     if (matchedPairs === 5) {
       setTimeout(() => {
-        navigate('/Inicio');
+        (async () => {
+          navigate('/Inicio');
+          await guardarPuntaje('https://afhasiajuegos.tech/juegos/winner_3.php');
+        })();
       }, 1400);
-    } 
-  }, [matchedPairs]); 
+    }
+  }, [matchedPairs]);
 
-  const resetGame = () => {
-    setCards(shuffleArray(cards.map(card => ({ ...card, flipped: true }))));
-    setFlippedCards([]);
-    setMatchedPairs(0);
-    setAttempts(0);
-    setShowAllCards(true);
-    setTimeout(() => {
-      setCards((prevCards) =>
-        prevCards.map((card) => ({ ...card, flipped: false }))
-      );
-      setShowAllCards(false);
-    }, 3000);
+  useEffect(() => {
+    if (attempts >= 5 && matchedPairs < 5) {
+      setTimeout(() => {
+        (async () => {
+          navigate('/Inicio');
+          await guardarPuntaje('https://afhasiajuegos.tech/juegos/over_3.php');
+        })();
+      }, 1000);
+    }
+  }, [matchedPairs, attempts]);
+
+  //Metodo para guarda el resultado del juego
+  const guardarPuntaje = async (url) => {
+    const body = {
+      cod_user: idusuario,
+      time: timeElapsed
+    };
+
+    try {
+      // Realizando la solicitud POST
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      // Verificando si la respuesta es exitosa
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Guardado correctamente');
+        return result;
+      } else {
+        console.error('Error en la solicitud:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Hubo un error en la solicitud:', error);
+    }
   };
 
   return (
     <div className="memory-game">
       <div className="status">
-        <p className="again">Intentos fallidos: {attempts}/5</p>
+        <div className='contain-top'>
+          <p className="time">⏱️ {timeElapsed} s</p>
+          <p className="again">Intentos fallidos: {attempts}/5</p>
+        </div>
         <h2 className="observa-title">Encuentra parejas</h2>
       </div>
       <div className="cards">
@@ -129,10 +172,10 @@ const MemoryGame = () => {
         ))}
       </div>
       {matchedPairs === 5 && (
-        <ModalGanar text={"¡HAS GANADO!"} />
+        <ModalGanar text={"¡HAS GANADO!"} activarTiempo={"si"} time={timeElapsed}/>
       )}
       {attempts >= 5 && matchedPairs < 5 && (
-        <ModalPerder text={"¡HAS PERDIDO!"} activarBoton={"si"} resetGame={resetGame} />
+        <ModalPerder text={"¡HAS PERDIDO!"} />
       )}
     </div>
   );

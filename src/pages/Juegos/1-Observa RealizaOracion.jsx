@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./1-Observa RealizaOracion.css";
 import ModalGanar from "../../components/ModalCorrecto";
 import ModalPerder from "../../components/ModalIncorrecto";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 const ObservaYRealiza = () => {
+  const idusuario = localStorage.getItem('idusuario');
   const [transcript, setTranscript] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [message, setMessage] = useState("");
-  const [idImagen, setIdImagen] = useState(Math.floor(Math.random() * 13) + 1);
+  const [idImagen, setIdImagen] = useState(5);
   const [correctCount, setCorrectCount] = useState(0);
   const navigate = useNavigate()
 
@@ -57,15 +59,21 @@ const ObservaYRealiza = () => {
         setCorrectCount((prevCount) => prevCount + 1);
         setIdImagen(Math.floor(Math.random() * 13) + 1); // Cambia a otra imagen aleatoria
         if (correctCount === 4) {
-          // Agregar un delay de 3 segundos antes de redirigir
           setTimeout(() => {
-            navigate('/Inicio');
-          }, 1400); 
+            (async () => {
+              await guardarPuntaje('https://afhasiajuegos.tech/juegos/winner_1.php');
+              navigate('/Inicio');
+            })();
+            }, 1400);
         }
       } else {
+        setTimeout(() => {
+          (async () => {
+            await guardarPuntaje('https://afhasiajuegos.tech/juegos/over_1.php');
+          })();
+          }, 1000);
         setCorrectCount(0); // Reinicia el contador si se falla
       }
-
       setMessage(respuesta);
     };
 
@@ -82,9 +90,41 @@ const ObservaYRealiza = () => {
     recognition.start();
   };
 
+  //Metodo para guarda el resultado del juego
+  const guardarPuntaje = async (url) => {
+    const body = {
+      cod_user: idusuario,
+    };
+
+    try {
+      // Realizando la solicitud POST
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      // Verificando si la respuesta es exitosa
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Guardado correctamente');
+        return result;
+      } else {
+        console.error('Error en la solicitud:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Hubo un error en la solicitud:', error);
+    }
+  };
+
   return (
     <div className="observa-container">
       <h2 className="observa-title">Observa y realiza una oración</h2>
+      <div className="text">
+        <p >Aciertos: {correctCount}/5</p>
+      </div>
       <div className="observa-row">
         <img
           src={`/assets/Juego1/g1${idImagen}.svg`} // Cambia esta ruta según tu imagen
