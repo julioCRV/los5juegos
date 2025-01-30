@@ -136,7 +136,7 @@ const GameComponent = () => {
 
     return (
         <>
-            <div className="game-container">
+            <div className="game2-container">
                 <h2 className="observa-title">Armadores con acciones</h2>
                 <p className='again'>Intentos fallidos: {failedAttempts}/1</p>
                 <div className="game-board">

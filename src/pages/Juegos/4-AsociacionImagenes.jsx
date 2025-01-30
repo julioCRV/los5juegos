@@ -125,7 +125,7 @@ const ImageAssociationGame = () => {
   }
 
   return (
-    <div className="game-container">
+    <div className="game4-container">
       <div className="failed-attempts">
         <p className="again">Intentos fallidos: {failedAttempts}/3</p>
         <div className="timer">⏱️ {time}s</div>
