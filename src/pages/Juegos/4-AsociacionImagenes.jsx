@@ -72,7 +72,7 @@ const ImageAssociationGame = () => {
   useEffect(() => {
     shuffleImages(); // Inicializa las imágenes al montar el componente
 
-    if (failedAttempts != 3) {
+    if (failedAttempts != 3 && correctAttempts != 3) {
       const timer = setInterval(() => {
         setTime((prev) => prev + 1);
       }, 1000);
@@ -87,7 +87,7 @@ const ImageAssociationGame = () => {
         clearInterval(shuffleTimer);
       };
     }
-  }, [index, isCorrect]);
+  }, [index,failedAttempts, correctAttempts]);
 
   useEffect(() => {
     if (failedAttempts === 3) {
@@ -193,7 +193,12 @@ const ImageAssociationGame = () => {
           ) : (
             <>
               {isCorrect === true ? (
-                <ModalGanar text={"¡CORECCTO! Has seleccionado la imagen correcta."} />) :
+                <>
+                  {correctAttempts === 3 ? (
+                    <ModalGanar text={"¡CORECCTO! Has completado el juego."} activarTiempo={"si"} time={time} />) : (
+                    <ModalGanar text={"¡CORECCTO! Has seleccionado la imagen correcta."} />)}
+                </>
+              ) :
                 (<ModalPerder text={"¡INCORRECTO! Intentalo nuevamente."} />)}
             </>
           )}
