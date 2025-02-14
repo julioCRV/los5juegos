@@ -10,7 +10,7 @@ import imagenIcon from '/assets/iconos/imagenes.svg';
 import objetosIcon from '/assets/iconos/objetos.svg';
 import salirIcon from '/assets/iconos/logOut.svg';
 
-const Home = ({CerrarSesion}) => {
+const Home = ({ CerrarSesion }) => {
   const location = useLocation();
   const { idusuario } = location.state || {};  // Accedemos al idusuario desde el estado
 
@@ -27,37 +27,42 @@ const Home = ({CerrarSesion}) => {
   }
 
   return (
-    <div className="home-container">
-      <button className="logout-button" onClick={onLogout}>
-        <img src={salirIcon} alt="Icono salir" className="logout-icon" />
-        Cerrar Sesión
-      </button>
-
-      <h1 className="home-title">Juegos de Fonoaudiología</h1>
-
-
-      <div className="card-grid">
-        {cards.slice(0, 3).map((card) => (
-          <Link to={card.link} key={card.id}>
-            <div className="home-card">
-              <img src={card.img} alt={card.title} className="card-image" />
-              <h3 className="card-title">{card.title}</h3>
-            </div>
-          </Link>
-        ))}
+    <>
+      <div className="header-container">
+        <button className="logout-button" onClick={onLogout}>
+          <img src={salirIcon} alt="Icono salir" className="logout-icon" />
+          Cerrar Sesión
+        </button>
       </div>
-      <br/>
-      <div className="card-grid2">
-        {cards.slice(3, 5).map((card) => (
-          <Link to={card.link} key={card.id}>
-            <div className="home-card2">
-              <img src={card.img} alt={card.title} className="card-image" />
-              <h3 className="card-title">{card.title}</h3>
-            </div>
-          </Link>
-        ))}
+
+      <div className="home-container">
+        <h1 className="home-title">Juegos de Fonoaudiología</h1>
+
+
+        <div className="card-grid">
+          {cards.slice(0, 3).map((card) => (
+            <Link to={card.link} key={card.id}>
+              <div className="home-card">
+                <img src={card.img} alt={card.title} className="card-image" />
+                <h3 className="card-title">{card.title}</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+        <br />
+        <div className="card-grid2">
+          {cards.slice(3, 5).map((card) => (
+            <Link to={card.link} key={card.id}>
+              <div className="home-card2">
+                <img src={card.img} alt={card.title} className="card-image" />
+                <h3 className="card-title">{card.title}</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
+
   );
 };
 

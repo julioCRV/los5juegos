@@ -45,7 +45,6 @@
     padding: 42px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
-    // margin-bottom: 50px;
 }
 
 /* Card individual */
@@ -111,10 +110,15 @@
     /* Naranja */
 }
 
+.header-container {
+    display: flex;
+    justify-content: flex-end; /* Mueve el botón a la derecha */
+    padding: 20px; /* Agrega espacio alrededor */
+}
+
+
 .logout-button {
-    position: absolute;
-    top: 30px;
-    right: 30px;
+    margin-top: 20px;
     background-color: #6340c4;
     color: white;
     border: none;
