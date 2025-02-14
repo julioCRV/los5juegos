@@ -28,19 +28,6 @@ const App = () => {
     localStorage.removeItem('idusuario');
   };
 
-  useEffect(() => {
-    const handleUnload = () => {
-      localStorage.removeItem('idusuario');
-      setId(null);
-    };
-
-    window.addEventListener("beforeunload", handleUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleUnload);
-    };
-  }, []);
-
   return (
     <div className="App">
       {id === null ? (

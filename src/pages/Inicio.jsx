@@ -46,6 +46,7 @@ const Home = ({CerrarSesion}) => {
           </Link>
         ))}
       </div>
+      <br/>
       <div className="card-grid2">
         {cards.slice(3, 5).map((card) => (
           <Link to={card.link} key={card.id}>

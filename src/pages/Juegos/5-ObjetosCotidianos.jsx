@@ -139,60 +139,64 @@ const Game = () => {
 
 
     return (
-        <div className="game-container">
-            <div className="question-container">
-                <p>{questionItem.opcion} </p>
-                <img
-                    src={questionItem.src}
-                    alt={questionItem.titulo}
-                    draggable={!dropped}
-                    onDragStart={(e) => handleDragStart(e, questionItem)}
-                    style={{
-                        width: "80px",
-                        height: "80px",
-                        padding: "5px",
-                        backgroundColor: "white",
-                        border: "2px solid black",
-                        borderRadius: "50%",
-                        cursor: "grab",
-                        opacity: dropped ? 0.5 : 1,
-                    }}
-                />
+        <>
+            <h2 className="observa-title">Objetos cotidianos</h2>
+
+            <div className="game-container">
+                <div className="question-container">
+                    <p>{questionItem.opcion} </p>
+                    <img
+                        src={questionItem.src}
+                        alt={questionItem.titulo}
+                        draggable={!dropped}
+                        onDragStart={(e) => handleDragStart(e, questionItem)}
+                        style={{
+                            width: "80px",
+                            height: "80px",
+                            padding: "5px",
+                            backgroundColor: "white",
+                            border: "2px solid black",
+                            borderRadius: "50%",
+                            cursor: "grab",
+                            opacity: dropped ? 0.5 : 1,
+                        }}
+                    />
+                </div>
+
+                <div className="options-container">
+                    {options.map((option) => (
+                        <div
+                            key={option.id}
+                            className="option"
+                            onDrop={(e) => handleDrop(e, option)}
+                            onDragOver={handleDragOver}
+
+                        >
+                            <img
+                                src={option.src}
+                                alt={option.titulo}
+                                style={{
+                                    padding: "5px",
+                                    width: "80px", height: "80px",
+                                    backgroundColor: "white",
+                                    border: "2px solid black",
+                                    borderRadius: "50%",
+                                }}
+                            />
+                            <p>{option.text}</p>
+                        </div>
+                    ))}
+                </div>
+
+                {feedback && (
+                    <>
+                        {feedback === 'Bien' ? (
+                            <ModalGanar text={"¡CORRECTO!"} />) :
+                            (<ModalPerder text={"¡INCORRECTO!"} />)}
+                    </>
+                )}
             </div>
-
-            <div className="options-container">
-                {options.map((option) => (
-                    <div
-                        key={option.id}
-                        className="option"
-                        onDrop={(e) => handleDrop(e, option)}
-                        onDragOver={handleDragOver}
-
-                    >
-                        <img
-                            src={option.src}
-                            alt={option.titulo}
-                            style={{
-                                padding: "5px",
-                                width: "80px", height: "80px",
-                                backgroundColor: "white",
-                                border: "2px solid black",
-                                borderRadius: "50%",
-                            }}
-                        />
-                        <p>{option.text}</p>
-                    </div>
-                ))}
-            </div>
-
-            {feedback && (
-                <>
-                    {feedback === 'Bien' ? (
-                        <ModalGanar text={"¡CORRECTO!"} />) :
-                        (<ModalPerder text={"¡INCORRECTO!"} />)}
-                </>
-            )}
-        </div>
+        </>
     );
 };
 
