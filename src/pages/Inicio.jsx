@@ -8,8 +8,9 @@ import armadoresIcon from '/assets/iconos/armadores.svg';
 import cartasIcon from '/assets/iconos/cartas.svg';
 import imagenIcon from '/assets/iconos/imagenes.svg';
 import objetosIcon from '/assets/iconos/objetos.svg';
+import salirIcon from '/assets/iconos/logOut.svg';
 
-const Home = () => {
+const Home = ({CerrarSesion}) => {
   const location = useLocation();
   const { idusuario } = location.state || {};  // Accedemos al idusuario desde el estado
 
@@ -21,9 +22,20 @@ const Home = () => {
     { id: 5, title: "Objetos cotidianos", img: objetosIcon, link: "/buscar-objetos" },
   ];
 
+  const onLogout = () => {
+    CerrarSesion(null)
+  }
+
   return (
     <div className="home-container">
+      <button className="logout-button" onClick={onLogout}>
+        <img src={salirIcon} alt="Icono salir" className="logout-icon" />
+        Cerrar Sesión
+      </button>
+
       <h1 className="home-title">Juegos de Fonoaudiología</h1>
+
+
       <div className="card-grid">
         {cards.slice(0, 3).map((card) => (
           <Link to={card.link} key={card.id}>

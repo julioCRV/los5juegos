@@ -6,7 +6,7 @@ import './IniciarSesion.css';
 import Modal from '../components/ModalCredenciales';
 
 
-const LoginForm = () => {
+const ForumularioIniciarSesion = ({login}) => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -39,6 +39,7 @@ const LoginForm = () => {
                 setMessage(true)
                 setTimeout(() => {
                     navigate('/Inicio');
+                    login(result.idusuario);
                   }, 2400); 
             } else {
                 setOpenModal(true);
@@ -115,4 +116,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default ForumularioIniciarSesion;
