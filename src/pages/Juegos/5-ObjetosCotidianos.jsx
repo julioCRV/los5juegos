@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import './5-ObjetosCotidianos.css';
 import { useNavigate } from "react-router-dom";
 import ModalGanar from "../../components/ModalCorrecto";
@@ -7,7 +7,10 @@ import ModalPerder from "../../components/ModalIncorrecto";
 const Game = () => {
     const idusuario = localStorage.getItem('idusuario');
     const [feedback, setFeedback] = useState("");
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const itemRef = useRef(null);
     const [dropped, setDropped] = useState(false);
+    const [draggedItem, setDraggedItem] = useState(null);
     const [idItem, setIdItem] = useState(Math.floor(Math.random() * 6) + 1);
     const [options, setOptions] = useState([])
     const navigate = useNavigate();
@@ -24,7 +27,7 @@ const Game = () => {
         { id: 9, src: "/assets/Juego5/g59.svg", titulo: "olla", text: "Cocinar comida" },
         { id: 10, src: "/assets/Juego5/g510.svg", titulo: "piso", text: "Barrer el piso" },
         { id: 11, src: "/assets/Juego5/g511.svg", titulo: "escribir", text: "Escribir un mensaje" },
-        { id: 12, src: "/assets/Juego5/g512.svg", titulo: "ducha", text: "Tomar una ducha" },
+        { id: 12, src: "/assets/Juego5/g512.svg", titulo: "pelicula", text: "Ver una pelicula" },
         { id: 13, src: "/assets/Juego5/g513.svg", titulo: "refresco", text: "Tomar refresco" },
         { id: 14, src: "/assets/Juego5/g514.svg", titulo: "hamburguesa", text: "Comer una hamburguesa" },
         { id: 15, src: "/assets/Juego5/g515.svg", titulo: "auto", text: "Conducir un auto" },
@@ -77,13 +80,83 @@ const Game = () => {
     const questionItem = items.find((item) => item.id === idItem);
 
     const handleDragStart = (e, item) => {
-        e.dataTransfer.setData("text/plain", item.titulo);
+        setDraggedItem(item);
+        e.dataTransfer.setData("text/plain", JSON.stringify(item));
+        setPosition({
+            x: e.clientX - itemRef.current.getBoundingClientRect().left,
+            y: e.clientY - itemRef.current.getBoundingClientRect().top,
+        });
     };
+
+    const handleTouchStart = (e, item) => {
+        setDraggedItem(item);
+        const touch = e.touches[0];
+        setPosition({
+            x: touch.clientX - itemRef.current.getBoundingClientRect().left,
+            y: touch.clientY - itemRef.current.getBoundingClientRect().top,
+        });
+    };
+
+    const handleTouchMove = (e) => {
+        if (!draggedItem) return;
+
+        const touch = e.touches[0];
+        itemRef.current.style.position = "absolute";
+        itemRef.current.style.left = `${touch.clientX - position.x}px`;
+        itemRef.current.style.top = `${touch.clientY - position.y}px`;
+    };
+
+    const handleTouchEnd = (e) => {
+        e.preventDefault();
+
+        // Obtener la posición del toque final
+        const touch = e.changedTouches[0]; // Última posición del toque
+        const touchX = touch.clientX;
+        const touchY = touch.clientY;
+
+        // Verificar con qué opción se superpone el toque
+        const selectedOption = options.find((option) => {
+            const optionElement = document.querySelector(`[data-id='${option.id}']`);
+            if (optionElement) {
+                const rect = optionElement.getBoundingClientRect();
+                return (
+                    touchX >= rect.left &&
+                    touchX <= rect.right &&
+                    touchY >= rect.top &&
+                    touchY <= rect.bottom
+                );
+            }
+            return false;
+        });
+
+        if (selectedOption) {
+            if (draggedItem.titulo === selectedOption.titulo) {
+                setFeedback("Bien");
+                setDropped(true);
+                setTimeout(() => {
+                    (async () => {
+                        await guardarPuntaje('https://afhasiajuegos.tech/juegos/winner_5.php');
+                        navigate('/Inicio');
+                    })();
+                }, 1400);
+            } else {
+                setFeedback("Mal");
+                setDropped(true);
+                setTimeout(() => {
+                    (async () => {
+                        await guardarPuntaje('https://afhasiajuegos.tech/juegos/over_5.php');
+                        navigate('/Inicio');
+                    })();
+                }, 1400);
+            }
+        }
+    };
+
 
     const handleDrop = (e, option) => {
         e.preventDefault();
-        const draggedPair = e.dataTransfer.getData("text/plain");
-        if (draggedPair === option.titulo) {
+
+        if (draggedItem.titulo === option.titulo) {
             setFeedback("Bien");
             setDropped(true);
             setTimeout(() => {
@@ -137,19 +210,21 @@ const Game = () => {
         }
     };
 
-
     return (
         <>
             <h2 className="observa-title">Objetos cotidianos</h2>
-
             <div className="game-container">
                 <div className="question-container">
                     <p>{questionItem.opcion} </p>
                     <img
+                        ref={itemRef}
                         src={questionItem.src}
                         alt={questionItem.titulo}
                         draggable={!dropped}
                         onDragStart={(e) => handleDragStart(e, questionItem)}
+                        onTouchStart={(e) => handleTouchStart(e, questionItem)}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={(e) => handleTouchEnd(e, questionItem)}
                         style={{
                             width: "80px",
                             height: "80px",
@@ -159,6 +234,8 @@ const Game = () => {
                             borderRadius: "50%",
                             cursor: "grab",
                             opacity: dropped ? 0.5 : 1,
+                            transition: "all 0.3s ease",
+                            // position: draggedItem ? "absolute" : "static",
                         }}
                     />
                 </div>
@@ -168,9 +245,10 @@ const Game = () => {
                         <div
                             key={option.id}
                             className="option"
+                            data-id={option.id}
                             onDrop={(e) => handleDrop(e, option)}
                             onDragOver={handleDragOver}
-
+                            onTouchEnd={(e) => handleTouchEnd(e, option)}
                         >
                             <img
                                 src={option.src}
