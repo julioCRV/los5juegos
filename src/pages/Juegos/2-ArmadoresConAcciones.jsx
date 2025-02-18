@@ -72,7 +72,7 @@ const GameComponent = () => {
                     await guardarPuntaje('https://afhasiajuegos.tech/juegos/over_2.php');
                     navigate('/Inicio');
                 })();
-            }, 1000);
+            }, 4000);
         } else {
             event.dataTransfer.setData('imageId', image.id);
             event.dataTransfer.setData('sourceType', sourceType);
@@ -251,7 +251,7 @@ const GameComponent = () => {
             <div>
                 {mostrarModal && (
                     <>
-                        {ganar === true ? (<ModalGanar text={"¡CORRECTO!"} activarTiempo={"si"} time={timeElapsed} />) : (<ModalPerder text={"¡INCORRECTO!"} />)}
+                        {ganar === true ? (<ModalGanar text={"¡CORRECTO!"} activarTiempo={"si"} time={timeElapsed} />) : (<ModalPerder text={"¡INCORRECTO!"} activarBoton={"si"} id={numero}/>)}
                     </>
                 )}
             </div>

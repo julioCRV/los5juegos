@@ -1,8 +1,8 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import './ModalEstilo.css';
 import IconIncorrecto from '/assets/iconos/incorrecto.svg';
 
-const ModalMal = ({ text, activarBoton, resetGame }) => {
+const ModalMal = ({ text, activarBoton, resetGame, id }) => {
 
     const [isActivate, setIsActivate] = useState(false);
 
@@ -16,14 +16,18 @@ const ModalMal = ({ text, activarBoton, resetGame }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
+            <p className="modal-text">{text}</p>
                 <img
                     src={IconIncorrecto}
                     alt="Ícono de Mal"
                     className="modal-icon"
                 />
-                <p className="modal-text">{text}</p>
+     
                 {isActivate && (
-                    <button className="button" onClick={resetGame}>Reiniciar</button>
+                    <>
+                        <p>Secuencia correcta de imagenes: </p>
+                        <img src={`/assets/Juego2/e${id}.svg`} alt="Timer" className="juego2-icon" />
+                    </>
                 )}
             </div>
         </div>
